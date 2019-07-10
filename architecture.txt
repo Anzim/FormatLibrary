@@ -1,0 +1,33 @@
+Architecture description 
+
+The library uses  .NET Standard 2.0 which is establishing greater uniformity in the .NET ecosystem and it is usable across .NET implementations.
+
+Initial version of the library supports two formats for CarCollection document: binary and XML, but it allows user to add new formats without modifying library by implementing custom serializer that conforms ICarCollectionSerializer  interface as done in the demo project.
+
+In order for a library to be reusable, it needs to have certain qualities that contribute to its reusability. Let’s consider it’s weak and strong sides
+Weak sides:
+    • Poor documented
+    • Poor encapsulation
+    • Poor error/exception handling
+    • Poor unit testing (only deep (integration) tests present)
+    • Not complete and not widely applicable
+Strong sides:
+    • Self-contained
+    • Adaptable/extensible
+    • Maintainable
+    • Consistent
+    • Machine independent (if .NETCore is used)
+    • Portable (across hardware and operating systems)
+    • Implementation/application independent
+
+Possible future library development:
+    • Add detailed documentation to make it understandable
+    • Add more overrides to serialiser’ s Read and Write methods to enable working with files (but it can make it machine independent!), byte arrays, strings directly. This will make it more widely applicable
+    • Add validation and error /exception handling to hide implementation details and make it more robust
+    • Make it encapsulated (details isolated and hidden from user)
+    • Add thread safety (if needed) it will make the library reliable
+    • Add 100% test coverage
+    • Make shareable with nuget
+    • Consider adding reuse statistics
+
+
