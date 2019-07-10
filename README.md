@@ -8,7 +8,7 @@ Price       Integer
 
 The library should allow editing of the specified record, adding new records and deleting the specified records. The other feature is format conversion.
 The library should support 2 file formats which have the following look:
-    1. Xml file format, which has the following structure:
+   1. Xml file format, which has the following structure:
 <?xml version="1.0" encoding="utf-8"?>
 <Document>
   <Car>
@@ -20,7 +20,7 @@ The library should support 2 file formats which have the following look:
 
 Restrictions: There may be 0 or more <Car> tags, the xml structure should be preserved.
 
-    2. Binary file format, which has the following structure (ordered):
+   2. Binary file format, which has the following structure (ordered):
 Field         Field size  Value
 Header            2 bytes     0x2526
 Records count     4 bytes     Integer specifying number of records
