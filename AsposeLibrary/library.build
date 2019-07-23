@@ -1,0 +1,41 @@
+<project name="Solution Build Example" default="rebuild">
+    <property name="pathto.solution" value="..\AsposeLibrary.sln" />
+
+    <target name="clean" description="Delete all previously compiled binaries.">
+        <delete>
+            <fileset>
+                <include name="**/bin/**" />
+                <include name="**/obj/**" />
+                <include name="**/*.suo" />
+                <include name="**/*.user" />
+            </fileset>
+        </delete>
+    </target>
+    
+    <target name="build" description="Build all targets.">
+        <call target="build.library"/>
+    </target>
+    
+    <target name="restore" description="Build all targets.">
+        <call target="restore.library"/>
+    </target>
+
+    <target name="rebuild" depends="clean, build" />
+
+    <target name="build.library">
+	<exec program="${pathto.msbuild}" verbose="true">
+    		<arg line="${pathto.solution}" />
+	    	<arg value="/property:Configuration=${configuration}"/>
+    		<arg value="/property:OutDir=${build.dir}/${configuration}"/>
+		<arg value="/restore"/>
+	</exec>
+        <property name="expected.output" value="${build.dir}/${configuration}/AsposeLibrary.dll"/>
+        <fail unless="${file::exists(expected.output)}">Output file doesn't exist in ${expected.output}</fail>
+        <copy todir="..\SharedLibs">
+            <fileset basedir="${build.dir}/${configuration}/">
+                 <include name="*.*" />
+            </fileset>
+        </copy>
+    </target>
+
+</project>

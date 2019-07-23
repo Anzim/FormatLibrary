@@ -13,6 +13,7 @@ namespace AsposeLibrary.Serializers
         {
             _serializer = new XmlSerializer(typeof(CarCollection));
         }
+
         public void Write(Stream destinationStream, CarCollection cars)
         {
             using (var writer = new StreamWriter(destinationStream, System.Text.Encoding.UTF8))

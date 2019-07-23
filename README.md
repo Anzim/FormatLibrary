@@ -42,3 +42,7 @@ Additional requirements:
     2. You should provide architecture description in English with description of weak and strong sides and possible future library development.
     3. The library should contain NUnit unit tests to validate its activities.
     4. NAnt build script for building the library.
+
+Run "nant build.library" to build library
+Run "nant build" to build demo project and library
+Run "nant" to rebuild demo project and library
