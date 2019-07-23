@@ -1,6 +1,6 @@
-<project name="Format Library Solution Build" default="rebuild">
+<project name="Demo Solution Build" default="rebuild.demo">
     <property name="pathto.msbuild" value="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\MSBuild.exe" />
-    <property name="pathto.solution" value="..\AsposeLibrary.sln" />
+    <property name="pathto.solution" value="..\AsposeDemo.sln" />
     <property name="configuration" value="release"/>
     <property name="build.dir" value="bin" />
 
@@ -15,26 +15,17 @@
         </delete>
     </target>
     
-    <target name="build" description="Build all targets.">
-        <call target="build.library"/>
-    </target>
-    
-    <target name="rebuild" depends="clean, build" />
+    <target name="rebuild.demo" depends="clean, build.demo" />
 
-    <target name="build.library">
+    <target name="build.demo">
 	<exec program="${pathto.msbuild}" verbose="true">
     		<arg line="${pathto.solution}" />
 	    	<arg value="/property:Configuration=${configuration}"/>
     		<arg value="/property:OutDir=${build.dir}/${configuration}"/>
 		<arg value="/restore"/>
 	</exec>
-        <property name="expected.output" value="${build.dir}/${configuration}/AsposeLibrary.dll"/>
+        <property name="expected.output" value="${build.dir}/${configuration}/AsposeDemo.exe"/>
         <fail unless="${file::exists(expected.output)}">Output file doesn't exist in ${expected.output}</fail>
-        <copy todir="..\SharedLibs">
-            <fileset basedir="${build.dir}/${configuration}/">
-                 <include name="*.*" />
-            </fileset>
-        </copy>
     </target>
 
 </project>

@@ -1,9 +1,9 @@
 ﻿using System.IO;
 using AsposeLibrary.Interfaces;
 using AsposeLibrary.Models;
-using  Newtonsoft.Json;
+using Newtonsoft.Json;
 
-namespace AsposeDemo
+namespace JsonSerializerPlugin.Serializers
 {
     public class CarCollectionJsonSerializer : ICarCollectionSerializer
     {
@@ -13,6 +13,16 @@ namespace AsposeDemo
         {
             _serializer = new JsonSerializer();
         }
+
+        public bool IsThisFileFormat(Stream stream)
+        {
+            var position = stream.Position;
+            var buffer = stream.ReadByte();
+            if (stream.CanSeek) stream.Seek(position, SeekOrigin.Begin);
+
+            return buffer == '{';
+        }
+
         public void Write(Stream destinationStream, CarCollection cars)
         {
             using (var writer = new StreamWriter(destinationStream))

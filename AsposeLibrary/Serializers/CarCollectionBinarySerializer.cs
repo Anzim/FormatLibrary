@@ -10,6 +10,16 @@ namespace AsposeLibrary.Serializers
     {
         private const ushort BinaryHeader = 0x2526;
 
+        public bool IsThisFileFormat(Stream stream)
+        {
+            var buffer = new byte[2];
+            var position = stream.Position;
+            stream.Read(buffer, 0, 2);
+            if (stream.CanSeek) stream.Seek(position, SeekOrigin.Begin);
+
+            return BinaryHeader == buffer[0] + buffer[1] * 0x100;
+        }
+
         public void Write(Stream destinationStream, CarCollection cars)
         {
             using (var writer = new BinaryWriter(destinationStream))
@@ -57,7 +67,7 @@ namespace AsposeLibrary.Serializers
         private static void InternalRead(BinaryReader reader, CarCollection cars)
         {
             var header = reader.ReadUInt16();
-            if (header != BinaryHeader) throw new AsposeException("Mismatch data format: signature is wrong");
+            if (header != BinaryHeader) throw new CarCollectionFormatException("Mismatch data format: signature is wrong");
 
             var records = reader.ReadUInt32();
             for (var i = 0; i < records; i++)

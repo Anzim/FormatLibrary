@@ -1,24 +1,45 @@
 <?xml version="1.0"?>
-<project name="Format Library" default="rebuild">
+<project name="Format Library Demo Build" default="rebuild">
     <property name="configuration" value="release"/>
     <property name="build.dir" value="bin" />
     <property name="pathto.msbuild" value="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\MSBuild.exe" />
-    <target name="*">
+    <target name="build.library">
         <nant target="${target::get-current-target()}">
             <buildfiles>
-                <include name="**/*.build" />
-                <exclude name="default.build" />
+                <include name="**/library.build" />
             </buildfiles>
         </nant>
     </target>
-    <target name="build.demo" rependson="build.library">
-	<exec program="${pathto.msbuild}" verbose="true">
-    		<arg line="${pathto.solution}" />
-	    	<arg value="/property:Configuration=${configuration}"/>
-    		<arg value="/property:OutDir=${build.dir}/${configuration}"/>
-		<arg value="/restore"/>
-	</exec>
-        <property name="expected.output" value="${build.dir}/${configuration}/AsposeDemo.exe"/>
-        <fail unless="${file::exists(expected.output)}">Output file doesn't exist in ${expected.output}</fail>
+    <target name="build.plugin">
+        <nant target="${target::get-current-target()}">
+            <buildfiles>
+                <include name="**/plugin.build" />
+            </buildfiles>
+        </nant>
     </target>
+    <target name="build.demo">
+        <nant target="${target::get-current-target()}">
+            <buildfiles>
+                <include name="**/demo.build" />
+            </buildfiles>
+        </nant>
+    </target>
+    <target name="clean" description="Delete all previously compiled binaries.">
+        <delete>
+            <fileset>
+                <include name="**/bin/**" />
+                <include name="**/obj/**" />
+                <include name="**/*.suo" />
+                <include name="**/*.user" />
+            </fileset>
+        </delete>
+    </target>
+    
+    <target name="build" description="Build all targets.">
+        <call target="build.library"/>
+        <call target="build.plugin"/>
+        <call target="build.demo"/>
+    </target>
+    
+    <target name="rebuild" depends="clean, build" />
 </project>

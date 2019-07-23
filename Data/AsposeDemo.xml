@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Car>
+    <Date>02.07.2019</Date>
+    <BrandName>Brand name (брэнд) 1</BrandName>
+    <Price>2863311529</Price>
+  </Car>
+  <Car>
+    <Date>03.07.2019</Date>
+    <BrandName>Brand name (брэнд) 2</BrandName>
+    <Price>1431655764</Price>
+  </Car>
+  <Car>
+    <Date>04.07.2019</Date>
+    <BrandName>Brand name (брэнд) 3</BrandName>
+    <Price>4294967295</Price>
+  </Car>
+</Document>

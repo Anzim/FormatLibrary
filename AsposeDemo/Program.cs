@@ -1,13 +1,16 @@
 using System;
 using System.IO;
-using AsposeLibrary.Serializers;
+using AsposeLibrary.Enums;
 using AsposeLibrary.Interfaces;
 using AsposeLibrary.Models;
+using AsposeLibrary.Supporters;
+using JsonSerializerPlugin.Serializers;
 
 namespace AsposeDemo
 {
     class Program
     {
+        private static CarCollectionSupporter _carSupporter = new CarCollectionSupporter();
         const string BinExt = ".dat";
         const string XmlExt = ".xml";
         const string JsonExt = ".json";
@@ -27,35 +30,37 @@ namespace AsposeDemo
             {
                 var demoCars = CreateDefaultCarCollection();
                 Console.WriteLine("Creating default Car Collection binary file " + BinaryDemoFileName);
-                CreateCarsFile(demoCars, new CarCollectionBinarySerializer(), BinaryDemoFileName);
+                _carSupporter.Save(BinaryDemoFileName, CarFileFormat.Binary, true, demoCars);
                 
                 Console.WriteLine("Creating default Car Collection XML file " + XmlDemoFileName);
-                CreateCarsFile(demoCars, new CarCollectionXMLSerializer(), XmlDemoFileName);
+                _carSupporter.Save(XmlDemoFileName, CarFileFormat.Xml, true, demoCars);
+
+                Console.WriteLine("Converting XML Car Collection file to a binary file " + BinaryFileName);
+                _carSupporter.Convert(XMLFileName, BinaryFileName, CarFileFormat.Binary);
 
                 Console.WriteLine("Reading Car Collection file " + XMLFileName);
-                var cars = ReadCarCollection(new CarCollectionXMLSerializer(), XMLFileName);
-
-                Console.WriteLine("Writing (converting) Car Collection to binary file " + BinaryFileName);
-                CreateCarsFile(cars, new CarCollectionBinarySerializer(), BinaryFileName);
+                var cars = _carSupporter.Load(XMLFileName);
                 
                 Console.WriteLine("Adding a new record to the default Car Collection file");
                 demoCars.CarRecords.Add(cars.CarRecords[0]);
 
+                Console.WriteLine("Creating modified Car Collection binary file " + ModifiedBinaryFileName);
+                _carSupporter.Save(ModifiedBinaryFileName, CarFileFormat.Binary, true, demoCars);
+
                 Console.WriteLine("Updating the first record in the default Car Collection file (price = 99999)");
                 demoCars.CarRecords[0].Price = 99999;
+
+                Console.WriteLine("Creating modified Car Collection XML file " + ModifiedXMLFileName);
+                _carSupporter.Save(ModifiedXMLFileName, CarFileFormat.Xml, true, demoCars);
 
                 Console.WriteLine("Deleting the second record in the default Car Collection file");
                 demoCars.CarRecords.RemoveAt(1);
 
-                Console.WriteLine("Creating modified Car Collection binary file " + ModifiedBinaryFileName);
-                CreateCarsFile(demoCars, new CarCollectionBinarySerializer(), ModifiedBinaryFileName);
-                
-                Console.WriteLine("Creating modified Car Collection XML file " + ModifiedXMLFileName);
-                CreateCarsFile(demoCars, new CarCollectionJsonSerializer(), ModifiedXMLFileName);
+                var jsonFormat = CarCollectionSupporter.AddFileFormat<CarCollectionJsonSerializer>();
 
-                Console.WriteLine("Creating modified Car Collection Json file " + ModifiedJsonFileName);
-                // Json serializer is custom user format
-                CreateCarsFile(demoCars, new CarCollectionJsonSerializer(), ModifiedJsonFileName);
+                Console.WriteLine("Creating modified Car Collection JSON file " + ModifiedJsonFileName);
+                _carSupporter.Save(ModifiedJsonFileName, jsonFormat, true, demoCars);
+                
             }
             catch (IOException e)
             {
@@ -65,13 +70,6 @@ namespace AsposeDemo
             Console.WriteLine("Press any key to continue");
             Console.ReadKey();
         }
-
-        private static void CreateCarsFile(CarCollection cars, ICarCollectionSerializer carsSerializer, string fileName) {
-            var file = File.Open(fileName, FileMode.Create);
-            carsSerializer.Write(file, cars);
-            file.Close();
-        }
-
 
         private static CarCollection CreateDefaultCarCollection()
         {
@@ -94,11 +92,11 @@ namespace AsposeDemo
             return cars;
         }
 
-        public static CarCollection ReadCarCollection(ICarCollectionSerializer carCollectionSerializer, string fileName)
-        {
-            var file = File.Open(fileName, FileMode.Open);
-            return carCollectionSerializer.Read(file);
-        }
+        //public static CarCollection ReadCarCollection(ICarCollectionSerializer carCollectionSerializer, string fileName)
+        //{
+        //    var file = File.Open(fileName, FileMode.Open);
+        //    return carCollectionSerializer.Read(file);
+        //}
     }
 }
 

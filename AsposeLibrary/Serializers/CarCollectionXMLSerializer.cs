@@ -14,6 +14,17 @@ namespace AsposeLibrary.Serializers
             _serializer = new XmlSerializer(typeof(CarCollection));
         }
 
+        public bool IsThisFileFormat(Stream stream)
+        {
+            var buffer = new byte[10];
+            var position = stream.Position;
+            stream.Read(buffer, 0, 8);
+            var headerString = System.Text.Encoding.UTF8.GetString(buffer);
+            if (stream.CanSeek) stream.Seek(position, SeekOrigin.Begin);
+
+            return headerString.Contains("<?xml");
+        }
+
         public void Write(Stream destinationStream, CarCollection cars)
         {
             using (var writer = new StreamWriter(destinationStream, System.Text.Encoding.UTF8))
