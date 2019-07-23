@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsposeLibrary", "AsposeLibr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsposeLibraryUnitTest", "AsposeLibraryUnitTest\AsposeLibraryUnitTest.csproj", "{931D9863-179A-46BB-ADCE-19C1BA3EBBF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonSerializerPlugin", "JsonSerializerPlugin\JsonSerializerPlugin.csproj", "{787C9236-BCAE-4DA4-A853-BE25B64D0689}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

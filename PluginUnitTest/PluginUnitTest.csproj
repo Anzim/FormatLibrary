@@ -14,7 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AsposeLibrary\AsposeLibrary.csproj" />
+    <Reference Include="AsposeLibrary">
+      <HintPath>..\SharedLibs\AsposeLibrary.dll</HintPath>
+    </Reference>
+    <ProjectReference Include="..\JsonSerializerPlugin\JsonSerializerPlugin.csproj" />
   </ItemGroup>
 
 </Project>

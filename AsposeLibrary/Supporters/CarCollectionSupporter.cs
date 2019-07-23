@@ -109,7 +109,7 @@ namespace AsposeLibrary.Supporters
         {
             using (var fileStream = File.Open(filePath, overWrite ? FileMode.Create : FileMode.CreateNew))
             {
-                Save(fileStream, fileFormat);
+                Save(fileStream, fileFormat, carCollection);
             }
         }
 

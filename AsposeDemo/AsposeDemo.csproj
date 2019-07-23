@@ -35,6 +35,9 @@
     <Reference Include="AsposeLibrary">
       <HintPath>..\SharedLibs\AsposeLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="JsonSerializerPlugin">
+      <HintPath>C:\Users\Andrey\Source\Repos\FormatLibrary\SharedLibs\JsonSerializerPlugin.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -49,13 +52,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\JsonSerializerPlugin\JsonSerializerPlugin.csproj">
-      <Project>{09D8198C-FBDA-44B2-B91A-B8A9148FBF97}</Project>
-      <Name>JsonSerializerPlugin</Name>
-    </ProjectReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.2</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

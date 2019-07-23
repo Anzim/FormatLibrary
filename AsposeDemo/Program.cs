@@ -36,7 +36,7 @@ namespace AsposeDemo
                 _carSupporter.Save(XmlDemoFileName, CarFileFormat.Xml, true, demoCars);
 
                 Console.WriteLine("Converting XML Car Collection file to a binary file " + BinaryFileName);
-                _carSupporter.Convert(XMLFileName, BinaryFileName, CarFileFormat.Binary);
+                _carSupporter.Convert(XMLFileName, BinaryFileName, CarFileFormat.Binary, true);
 
                 Console.WriteLine("Reading Car Collection file " + XMLFileName);
                 var cars = _carSupporter.Load(XMLFileName);
